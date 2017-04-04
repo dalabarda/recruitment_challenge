@@ -1,0 +1,107 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Press Release
+% LaTeX Template
+% Version 1.0 (2/6/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt,pressrelease]{newlfm} % Font size
+
+\usepackage{charter} % Use the Charter font for the document text
+
+\PhrPhone{Phone} % Customize the "Telephone" text
+\PhrEmail{Email} % Customize the "E-mail" text
+%\PhrContact{Contact} % Uncomment this line to change the 'Contact:' text
+
+%----------------------------------------------------------------------------------------
+%	PRESS RELEASE INFORMATION
+%----------------------------------------------------------------------------------------
+
+\makeletterhead{Uiuc}{\Cheader{\vspace{16pt}\includegraphics[width=0.5\linewidth]{AMSlogo3mix100.jpg}}} % Include a company logo, if you don't use one you will need to uncomment line 6 in the prsrls.tex file
+\lthUiuc % Print the company/institution logo
+
+\release{Recruitment Challenge - Data Science traineer} % When the press release may be used
+
+\namefrom{Daniel Carlos dos Santos Machado} % Name
+
+\addrfrom{ % From address
+Hansaring 25 \\
+Münster, NRW 48155
+}
+
+\phonefrom{(+49) 17 656 912 333} % Phone number
+
+\emailfrom{dalabarda@gmail.com} % Email address
+
+\headline{} % Headline for the press release
+
+\newcommand{\subtitle}{This is a subtitle to the headline giving more information about the headline.} % Subtitle for the press release, if you don't want one just remove the subtitle text leaving the rest of the command
+
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+\begin{newlfm}
+
+%----------------------------------------------------------------------------------------
+%	PRESS RELEASE CONTENT
+%----------------------------------------------------------------------------------------
+
+\begin{singlespace} % Uncomment for single line spacing
+
+\section{1. Initial data analysis.}
+
+
+All steps performed to analyse and work with the data is within the \textbf{recruitmentSolution.ipynb} Jupiter notebook file. My first action was looking for an NaN or invalid cell which in further manipulation could hinder the data processing. It turned out that there was no change in the row, containing the same initial 66137 \textbf{\textit{Out[6]}} and \textbf{\textit{Out[7]}}. 
+
+the method df.isnull().values.any() were applied and the result was False. which is great. Any row was removed, there was no need to Impute any values and we could directly move to the next step.
+
+There were around 10 columns with unique values. their indexes are 59, 179, 268, 269, 270, 271, 272, 273, 274, 275 and 276. I considered removing them once they would help the classification. However, as there are some Neural Networks that evaluate the interaction between columns. I thought there is no harm in still letting them in.
+
+I've printed a Helper function that displays correlation matrix for each pair of columns in the data-frame by color. Red is most correlated, Blue least. Usually high correlation between columns hinder the the result once different columns might be from similar variables. The observation is that there are only 15 correlations between dimensions that are above 50\% of the whole amount. And Only two variables presented significantly high correlation. If I were dealing with an small amount of dimensions. I would consider removing one column. However, in these case, I decided to keep it as it is.
+
+The most notorious characteristic of this data-set is the Bad distribution of values/classes. Over 70\% correspond to class C whereas class A Only represents a small amount of data(1,3\%). Thus, a standard learning technique might not work very well. In this particular case, we need to use a special advanced technique. Around 10,0\% of the data is classified as B. in these case, falls into the same problem as class A which has not many samples
+The Class C represents the vast majority of the cases covering around 70,9\% of the total amount of classes.
+
+\hfill \break
+\section{2. Fiting some ML model(s).}
+
+\large\textbf{Linear SVM, Random Forest \& Logistic Regression.} \\
+
+First, I tried To use Linear-SVM to classify the data-set. Initially, I expected that the algorithm would at least classify values C and not C. It turned out to classify the majority of rows as B. I thought that I should change the default parameters. But as I don't have much experience, I decided to try another algorithm.
+
+Trying with Random forest, It turned out to find right the opposite. The accuracy resulted trained data is 0,9786 and the Accuracy for the test data is 0.6934, which I believe it is satisfactory for this case. We can enhance it but I will leave it as it is and go to the other phase.
+
+Performing the Logistic Regression algorithm resulted in an interesting insight. The default parameter classify all samples as value C. As c represent the vast majority of the data Class, it turn out to be a good result covering more than 70\% of the total universe . When I started to modify the parameters to fit into a multivariate classification, the overall accuracy was hindered and decreasing around 1\%.
+
+Like modifying the parameter, The Cross Validation of logistic regression didn't show more accuracy although it tried to guess more values.
+
+\hfill \break
+\section{3. Results \& Next Steps}
+
+An alternative to better classify this dataset could be by performing at first, a decision tree approach in which it would classify everything as C and Non-C. Then, in a second level, We could select the sabe amount of data from the remaining categories and execute the Random Forest Algorithm.
+
+
+\large\textbf{2.2 Neural Network} \\
+Probably a linear solution like Backpropagation may not be the best strategy  once these vast amount of dimensions might have relationship with one-another or much more dimensions.  Given the present data-set, the Gradient descent algorithm becomes computationally expensive procedure. A better alternative is using the Stochastic Gradient Descent could be a good solution.
+
+
+\end{singlespace} % Uncomment for single line spacing
+
+%----------------------------------------------------------------------------------------
+
+\end{newlfm}
+\end{document}
